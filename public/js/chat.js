@@ -80,26 +80,29 @@ form.addEventListener('submit', e => {
   });
 });
 
-sendLocationBtn.addEventListener('click', () => {
-  if(!navigator.geolocation) {
-    return alert('Geolocation is not supported by your browser.');
-  }
-  sendLocationBtn.setAttribute('disabled', 'disabled');
-  navigator.geolocation.getCurrentPosition(position => {
-    const location = {
-      lat: position.coords.latitude,
-      long: position.coords.longitude
-    };
-    socket.emit('sendLocation', location, () => {
-      console.log('Location shared!');
-      sendLocationBtn.removeAttribute('disabled');
-    });
-  });
-});
+// sendLocationBtn.addEventListener('click', () => {
+//   if(!navigator.geolocation) {
+//     return alert('Geolocation is not supported by your browser.');
+//   }
+//   sendLocationBtn.setAttribute('disabled', 'disabled');
+//   navigator.geolocation.getCurrentPosition(position => {
+//     const location = {
+//       lat: position.coords.latitude,
+//       long: position.coords.longitude
+//     };
+//     socket.emit('sendLocation', location, () => {
+//       console.log('Location shared!');
+//       sendLocationBtn.removeAttribute('disabled');
+//     });
+//   });
+// });
 
 socket.emit('join', { username, room }, error => {
   if(error) {
     alert(error)
     location.href = '/'
   }
+  document.querySelector('#exit-btn').addEventListener('click', () => {
+    location.href = '/';
+  });
 });
